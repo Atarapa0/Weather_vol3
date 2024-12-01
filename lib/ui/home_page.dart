@@ -8,7 +8,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String apikey="26475ac066314d0baa3130732243011";
+  String apikey="b52a2457f3794d5c935191632240112;
   String city="London";
   String weatherIcon="";
   int temperature=0;
@@ -17,6 +17,13 @@ class _HomePageState extends State<HomePage> {
   int cloud=0;
   String currentDate="";
 
+  List houryWeatherorecast=[];
+  List dailyWeatherForecast=[];
+
+  String currentWeathertatus="";
+
+  //API Call
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +31,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Weather Vol3 '),
       ),
       body: const Center(
-        child: Text('Hello, World!aa'),
+        child: Text('Weather Vol3'),
       ),
     );
   }
