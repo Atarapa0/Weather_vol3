@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,31 +10,79 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String apikey="b52a2457f3794d5c935191632240112";
-  String city="London";
-  String weatherIcon="";
-  int temperature=0;
-  int windSpeed=0;
-  int humidity=0;
-  int cloud=0;
-  String currentDate="";
+  static const String apiKey = "b52a2457f3794d5c935191632240112";
+  static const String baseUrl = "https://api.weatherapi.com/v1/current.json";
+  String location = "Loading...";
+  String weatherStatus = "Loading...";
+  int temperature = 0;
 
-  List houryWeatherorecast=[];
-  List dailyWeatherForecast=[];
+  Future<void> fetchWeatherData(String searchText) async {
+    try {
+      final String url = "$baseUrl?key=$apiKey&q=$searchText&aqi=no";
+      var searchResult = await http.get(Uri.parse(url));
 
-  String currentWeathertatus="";
+      if (searchResult.statusCode == 200) {
+        final weatherData = json.decode(searchResult.body) as Map<String, dynamic>;
+        final locationData = weatherData["location"];
+        final currentWeather = weatherData["current"];
 
-  //API Call
+        setState(() {
+          location = locationData["name"];
+          weatherStatus = currentWeather["condition"]["text"];
+          temperature = currentWeather["temp_c"].toInt();
+        });
+      } else {
+        setState(() {
+          location = "Error: ${searchResult.statusCode}";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        location = "Error fetching data.";
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchWeatherData("London"); // Varsayılan şehir Londra
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Weather Vol3 '),
+        title: const Text('Weather Vol3'),
       ),
-      body: const Center(
-        child: Text('Weather Vol3'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Location: $location",
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              "Weather: $weatherStatus",
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              "Temperature: $temperature°C",
+              style: const TextStyle(fontSize: 18),
+            ),
+
+          ],
+        ),
       ),
     );
   }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: HomePage(),
+  ));
 }
