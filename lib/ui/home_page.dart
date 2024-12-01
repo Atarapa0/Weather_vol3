@@ -8,7 +8,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String apikey="b52a2457f3794d5c935191632240112;
+  String apikey="b52a2457f3794d5c935191632240112";
   String city="London";
   String weatherIcon="";
   int temperature=0;
