@@ -20,10 +20,10 @@ class _HomePageState extends State<HomePage> {
   int cloud=0;
   String currentDate="";
 
-  List houryWeatherorecast=[];
+  List houryWeatherforecast=[];
   List dailyWeatherForecast=[];
 
-  String currentWeathertatus="";
+  String currentWeatherstatus="";
 
   //API Call
   String searchWeatherApi="https://api.weatherapi.com/v1/current.json?key=$apiKey&q=$location&aqi=no";
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
 
       setState(() {
         location =getShortLocationName(locationData["name"]);
-        print(location);
+
       });
     }catch(e){
       debugPrint("Error: $e");
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     List<String> wordlist = s.split(" ");
     if(wordlist.isNotEmpty){
       if(wordlist.length > 1){
-        return wordlist[0] + " " + wordlist[1];
+        return "${wordlist[0]} ${wordlist[1]}";
       } else {
         return wordlist[0];
       }
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 10),
             Text(
-              "Weather: $currentWeathertatus",
+              "Weather: $currentWeatherstatus",
               style: const TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 10),
