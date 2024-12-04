@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
+                //crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(
@@ -264,6 +264,43 @@ class _HomePageState extends State<HomePage> {
                             foreground: Paint()..shader = _constants.shader,
                           )),
                     ],
+                  ),
+                  Text(currentWeatherstatus,style:  const TextStyle(
+                    color: Colors.white70,
+                    fontSize: 20,
+                  ),),
+                  Text(currentDate,style: const TextStyle(
+                    color: Colors.white70,
+                  ),),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: const Divider(
+                      color: Colors.white70,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius:  BorderRadius.circular(15),
+                          ),
+                          child: Image.asset("assets/thunder.png"),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Text('10km/s', style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                        ),),
+                      ],
+                    ),
                   ),
                 ],
               ),
