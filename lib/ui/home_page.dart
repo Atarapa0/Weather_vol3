@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   List houryWeatherforecast = [];
   List dailyWeatherForecast = [];
 
-  String currentWeatherstatus = "";
+  String currentWeatherstatus = " ";
 
   //API Call
   String searchWeatherApi =
@@ -55,8 +55,8 @@ class _HomePageState extends State<HomePage> {
 
         //update Weather
         currentWeatherstatus = currentWeather["condition"]["text"];
-        //weatherIcon=currentWeatherstatus.replaceAll('', '').toLowerCase()+".png";
-        weatherIcon = "https:${currentWeather["condition"]["icon"]}";
+        weatherIcon =
+            "${currentWeatherstatus.replaceAll('', '').toLowerCase()}.png";
         temperature = currentWeather["temp_c"].toInt();
         windSpeed = currentWeather["wind_kph"].toInt();
         humidity = currentWeather["humidity"].toInt();
@@ -125,115 +125,149 @@ class _HomePageState extends State<HomePage> {
                 ],
                 borderRadius: BorderRadius.circular(20),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/menu.png",
-                      width: 40,
-                      height: 40,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/pin.png",
-                          width: 20,
-                        ),
-                        const SizedBox(
-                          width: 2,
-                        ),
-                        Text(
-                          location,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/menu.png",
+                        width: 40,
+                        height: 40,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/pin.png",
+                            width: 20,
                           ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            _cityController.clear();
-                            showMaterialModalBottomSheet(
-                                context: context,
-                                builder: (context) => SingleChildScrollView(
-                                      controller:
-                                          ModalScrollController.of(context),
-                                      child: Container(
-                                        height: size.height * .2,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
-                                          vertical: 10,
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              width: 70,
-                                              child: Divider(
-                                                thickness: 3.5,
-                                                color: _constants.primaryColor,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            TextField(
-                                              onChanged: (searchText) {
-                                                fetchWeatherData(searchText);
-                                              },
-                                              controller: _cityController,
-                                              autofocus: true,
-                                              decoration: InputDecoration(
-                                                prefixIcon: Icon(
-                                                  Icons.search,
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                            location,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              _cityController.clear();
+                              showMaterialModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => SingleChildScrollView(
+                                        controller:
+                                            ModalScrollController.of(context),
+                                        child: Container(
+                                          height: size.height * .2,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 20,
+                                            vertical: 10,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                width: 70,
+                                                child: Divider(
+                                                  thickness: 3.5,
                                                   color:
                                                       _constants.primaryColor,
                                                 ),
-                                                suffixIcon: GestureDetector(
-                                                  onTap: () =>
-                                                      _cityController.clear(),
-                                                  child: Icon(
-                                                    Icons.close,
-                                                    color:
-                                                        _constants.primaryColor,
-                                                  ),
-                                                ),
-                                                hintText:
-                                                    'Search City e.g London',
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color:
-                                                        _constants.primaryColor,
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
                                               ),
-                                            )
-                                          ],
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              TextField(
+                                                onChanged: (searchText) {
+                                                  fetchWeatherData(searchText);
+                                                },
+                                                controller: _cityController,
+                                                autofocus: true,
+                                                decoration: InputDecoration(
+                                                  prefixIcon: Icon(
+                                                    Icons.search,
+                                                    color:
+                                                        _constants.primaryColor,
+                                                  ),
+                                                  suffixIcon: GestureDetector(
+                                                    onTap: () =>
+                                                        _cityController.clear(),
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      color: _constants
+                                                          .primaryColor,
+                                                    ),
+                                                  ),
+                                                  hintText:
+                                                      'Search City e.g London',
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: _constants
+                                                          .primaryColor,
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ));
-                          },
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down,
-                            color: Colors.white,
+                                      ));
+                            },
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down,
+                              color: Colors.white,
+                            ),
                           ),
+                        ],
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          "assets/avatar.png",
+                          width: 40,
+                          height: 40,
                         ),
-                      ],
-                    ),
-
-                  ],
-                )
-              ],
-            )
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 160,
+                    child: Image.asset("assets/$weatherIcon"),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(temperature.toString(),
+                            style: TextStyle(
+                              fontSize: 80,
+                              fontWeight: FontWeight.bold,
+                              foreground: Paint()..shader = _constants.shader,
+                            )),
+                      ),
+                      Text('°',
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()..shader = _constants.shader,
+                          )),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
