@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     fetchWeatherData(location);
     super.initState();
-    //fetchWeatherData("London"); // Varsayılan şehir Londra
+    //fetchWeatherData("London"); //Default city is London
   }
 
   @override
