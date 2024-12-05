@@ -265,48 +265,94 @@ class _HomePageState extends State<HomePage> {
                           )),
                     ],
                   ),
-                  Text(currentWeatherstatus,style:  const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 20,
-                  ),),
-                  Text(currentDate,style: const TextStyle(
-                    color: Colors.white70,
-                  ),),
+                  Text(
+                    currentWeatherstatus,
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 20,
+                    ),
+                  ),
+                  Text(
+                    currentDate,
+                    style: const TextStyle(
+                      color: Colors.white70,
+                    ),
+                  ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: const Divider(
                       color: Colors.white70,
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius:  BorderRadius.circular(15),
-                          ),
-                          child: Image.asset("assets/thunder.png"),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const Text('10km/s', style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white
-                        ),),
-                      ],
-                    ),
-                  ),
+                   Container(
+                     padding: const EdgeInsets.symmetric(horizontal: 40),
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         WeatherItem(
+                           value: windSpeed.toInt(),
+                            unit: "km/h",
+                           ImageUrl: "assets/windy.png",
+                         ),
+                         WeatherItem(
+                           value: humidity.toInt(),
+                           unit: "km/h",
+                           ImageUrl: "assets/humidity.png",
+                         ),
+                         WeatherItem(
+                           value: cloud.toInt(),
+                           unit: "%",
+                           ImageUrl: "assets/cloudy-night.png",
+                         ),
+                       ],
+                     ),
+                   ),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class WeatherItem extends StatelessWidget {
+  final int value;
+  final String unit;
+  final String ImageUrl;
+
+  const WeatherItem({
+    super.key,
+    required this.value,
+    required this.unit,
+    required this.ImageUrl,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Image.asset(ImageUrl),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+           Text(
+            value.toString()+ unit ,
+            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+        ],
       ),
     );
   }
