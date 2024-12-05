@@ -331,29 +331,33 @@ class WeatherItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            height: 60,
-            width: 60,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Image.asset(ImageUrl),
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Image.asset(ImageUrl),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+               Text(
+                value.toString()+ unit ,
+                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+            ],
           ),
-          const SizedBox(
-            height: 8,
-          ),
-           Text(
-            value.toString()+ unit ,
-            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
