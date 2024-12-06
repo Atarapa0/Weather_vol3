@@ -386,14 +386,28 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Image.asset('assets/$forecastWeatherIcon', width: 20),
+                            Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
                               Text(
                                 forecastTemperature,
                                 style: TextStyle(
                                   fontSize: 17,
                                   color: _constants.greyColor,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
+                              Text(
+                                '°',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: _constants.greyColor,
+                                  fontWeight: FontWeight.w500,
+                                  fontFeatures: const [FontFeature.enable('sups'),],
+                                ),
+                              ),
+                            ],
+                          ),
                             ],
                           ),
                         );
