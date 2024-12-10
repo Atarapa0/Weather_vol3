@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'ui/home_page.dart';
 
-void main() {
+Future<void> main() async {
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    print("Dotenv yükleme hatası: $e");
+  }
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {

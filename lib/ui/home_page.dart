@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:weathervol3/components/weather_item.dart';
 import 'package:weathervol3/constants.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,8 +19,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _cityController = TextEditingController();
   final Constants _constants = Constants();
-  static const String apiKey = "b52a2457f3794d5c935191632240112";
-  static String location = "London";
+  //static String? apiKey = dotenv.env['API_KEY'];
+  static String? apiKey = dotenv.env['API_KEY'] ?? '';
+  static String location = "İstanbul";
   String weatherIcon = "";
   int temperature = 0;
   int windSpeed = 0;
@@ -57,7 +59,7 @@ class _HomePageState extends State<HomePage> {
         //update Weather
         currentWeatherstatus = currentWeather["condition"]["text"];
         weatherIcon =
-            "${currentWeatherstatus.replaceAll('', '').toLowerCase()}.png";
+            "${currentWeatherstatus.replaceAll(' ','').toLowerCase()}.png";
         temperature = currentWeather["temp_c"].toInt();
         windSpeed = currentWeather["wind_kph"].toInt();
         humidity = currentWeather["humidity"].toInt();
@@ -90,8 +92,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    print("API Key: $apiKey");
     fetchWeatherData(location);
     super.initState();
+
     //fetchWeatherData("London"); //Default city is London
   }
 
@@ -297,7 +301,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         WeatherItem(
                           value: humidity.toInt(),
-                          unit: "km/h",
+                          unit: "%",
                           ImageUrl: "assets/humidity.png",
                         ),
                         WeatherItem(
@@ -355,9 +359,10 @@ class _HomePageState extends State<HomePage> {
                         String forecastTime = houryWeatherforecast[index]["time"].substring(11, 16);
                         String forecastHour = houryWeatherforecast[index]["time"].substring(11, 13);
 
+
                         String forecastWeatherName = houryWeatherforecast[index]["condition"]["text"];
                         String forecastWeatherIcon = "${forecastWeatherName.replaceAll(' ', '').toLowerCase()}.png";
-
+                        print(forecastWeatherIcon); // Hangi dosya yolu dönüyor, kontrol edin.
                         String forecastTemperature = houryWeatherforecast[index]["temp_c"].round().toString();
                         return Container(
                           padding: const EdgeInsets.symmetric(vertical: 15),
