@@ -7,6 +7,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:weathervol3/components/weather_item.dart';
 import 'package:weathervol3/constants.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:weathervol3/ui/detail_page.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   final Constants _constants = Constants();
   //static String? apiKey = dotenv.env['API_KEY'];
   static String? apiKey = dotenv.env['API_KEY'] ?? '';
-  static String location = "İstanbul";
+  static String location = "London";
   String weatherIcon = "";
   int temperature = 0;
   int windSpeed = 0;
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
         //update Weather
         currentWeatherstatus = currentWeather["condition"]["text"];
         weatherIcon =
-            "${currentWeatherstatus.replaceAll(' ','').toLowerCase()}.png";
+            "${currentWeatherstatus.replaceAll(' ', '').toLowerCase()}.png";
         temperature = currentWeather["temp_c"].toInt();
         windSpeed = currentWeather["wind_kph"].toInt();
         humidity = currentWeather["humidity"].toInt();
@@ -92,7 +93,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    print("API Key: $apiKey");
     fetchWeatherData(location);
     super.initState();
 
@@ -324,19 +324,23 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
+                    children: [
                       const Text(
                         'Today',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                       GestureDetector(
-                         onTap: ()=> print('Tapped'),
-                         child:  Text('Forecast',style: TextStyle(
-                           fontWeight: FontWeight.w600,
-                           fontSize: 16,
-                           color: _constants.primaryColor,
-                         ),),
-                       )
+                      GestureDetector(
+                        onTap: () =>
+                        Navigator.push(context,MaterialPageRoute(builder: (_)=>DetailPage(dailyForecastWeather:dailyWeatherForecast))),
+                        child: Text(
+                          'Forecast',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: _constants.primaryColor,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   const SizedBox(
@@ -347,30 +351,45 @@ class _HomePageState extends State<HomePage> {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
-                      itemCount: houryWeatherforecast.length, // Ensure the itemCount is set
+                      itemCount: houryWeatherforecast
+                          .length, // Ensure the itemCount is set
                       itemBuilder: (BuildContext context, int index) {
                         if (index >= houryWeatherforecast.length) {
                           return Container(); // Return an empty container if index is out of range
                         }
 
-                        String currenttime = DateFormat('HH:mm:ss').format(DateTime.now());
+                        String currenttime =
+                            DateFormat('HH:mm:ss').format(DateTime.now());
                         String currentHour = currenttime.substring(0, 2);
 
-                        String forecastTime = houryWeatherforecast[index]["time"].substring(11, 16);
-                        String forecastHour = houryWeatherforecast[index]["time"].substring(11, 13);
+                        String forecastTime = houryWeatherforecast[index]
+                                ["time"]
+                            .substring(11, 16);
+                        String forecastHour = houryWeatherforecast[index]
+                                ["time"]
+                            .substring(11, 13);
 
-
-                        String forecastWeatherName = houryWeatherforecast[index]["condition"]["text"];
-                        String forecastWeatherIcon = "${forecastWeatherName.replaceAll(' ', '').toLowerCase()}.png";
-                        print(forecastWeatherIcon); // Hangi dosya yolu dönüyor, kontrol edin.
-                        String forecastTemperature = houryWeatherforecast[index]["temp_c"].round().toString();
+                        String forecastWeatherName =
+                            houryWeatherforecast[index]["condition"]["text"];
+                        String forecastWeatherIcon =
+                            "${forecastWeatherName.replaceAll(' ', '').toLowerCase()}.png";
+                        print(
+                            forecastWeatherIcon); // Hangi dosya yolu dönüyor, kontrol edin.
+                        print(forecastTime);
+                        String forecastTemperature = houryWeatherforecast[index]
+                                ["temp_c"]
+                            .round()
+                            .toString();
                         return Container(
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           margin: const EdgeInsets.only(right: 20),
                           width: 65,
                           decoration: BoxDecoration(
-                            color: currentHour == forecastHour ? Colors.white : _constants.primaryColor,
-                            borderRadius: const BorderRadius.all(Radius.circular(50)),
+                            color: currentHour == forecastHour
+                                ? Colors.white
+                                : _constants.primaryColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(50)),
                             boxShadow: [
                               BoxShadow(
                                 offset: const Offset(0, 1),
@@ -390,29 +409,32 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              Image.asset('assets/$forecastWeatherIcon', width: 20),
-                            Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                forecastTemperature,
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: _constants.greyColor,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                              Image.asset('assets/$forecastWeatherIcon',
+                                  width: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    forecastTemperature,
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      color: _constants.greyColor,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(
+                                    '°',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      color: _constants.greyColor,
+                                      fontWeight: FontWeight.w500,
+                                      fontFeatures: const [
+                                        FontFeature.enable('sups'),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                '°',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: _constants.greyColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontFeatures: const [FontFeature.enable('sups'),],
-                                ),
-                              ),
-                            ],
-                          ),
                             ],
                           ),
                         );
