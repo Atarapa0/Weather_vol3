@@ -41,10 +41,15 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> fetchWeatherData(String searchText) async {
     try {
-      var searchResult =
-          await http.get(Uri.parse(searchWeatherApi + searchText));
-      final weatherData = Map<String, dynamic>.from(
-          json.decode(searchResult.body) ?? 'No Data');
+      // Update the location
+      location = searchText;
+
+      // Update the API URL with the new location
+      String searchWeatherApi =
+          "https://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$location&days=10&aqi=no&alerts=no";
+
+      var searchResult = await http.get(Uri.parse(searchWeatherApi));
+      final weatherData = Map<String, dynamic>.from(json.decode(searchResult.body) ?? 'No Data');
 
       var locationData = weatherData["location"];
       var currentWeather = weatherData["current"];
@@ -52,25 +57,19 @@ class _HomePageState extends State<HomePage> {
 
       setState(() {
         location = getShortLocationName(locationData["name"]);
-        var parseDate =
-            DateTime.parse(locationData["localtime"].substring(0, 10));
+        var parseDate = DateTime.parse(locationData["localtime"].substring(0, 10));
         var newDate = DateFormat('MMMMEEEEd').format(parseDate);
         currentDate = newDate;
 
-        //update Weather
         currentWeatherstatus = currentWeather["condition"]["text"];
-        weatherIcon =
-            "${currentWeatherstatus.replaceAll(' ', '').toLowerCase()}.png";
+        weatherIcon = "${currentWeatherstatus.replaceAll(' ', '').toLowerCase()}.png";
         temperature = currentWeather["temp_c"].toInt();
         windSpeed = currentWeather["wind_kph"].toInt();
         humidity = currentWeather["humidity"].toInt();
         cloud = currentWeather["cloud"].toInt();
 
-        //forecast data
         dailyWeatherForecast = forecastData["forecastday"];
         houryWeatherforecast = dailyWeatherForecast[0]["hour"];
-
-        //print(dailyWeatherForecast);
       });
     } catch (e) {
       debugPrint("Error : $e");
