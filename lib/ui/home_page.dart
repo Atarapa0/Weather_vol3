@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
 
   //API Call
   String searchWeatherApi =
-      "https://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$location&aqi=no";
+      "https://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$location&days=10&aqi=no&alerts=no";
 
   Future<void> fetchWeatherData(String searchText) async {
     try {

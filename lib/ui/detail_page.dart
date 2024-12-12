@@ -18,10 +18,10 @@ class _DetailPageState extends State<DetailPage> {
   Map<String, dynamic> getForecastWeather(int index) {
     var weatherData = widget.dailyForecastWeather;
 
-    print('Toplam hava durumu verisi: ${weatherData.length}');
+    print('Total weather data: ${weatherData.length}');
 
     if (weatherData.isEmpty) {
-      print('Hava durumu verisi boş');
+      print('Weather data is empty');
       return {
         'minWindSpeed': 0,
         'avgHumidity': 0,
@@ -35,7 +35,7 @@ class _DetailPageState extends State<DetailPage> {
     }
 
     if (index < 0 || index >= weatherData.length) {
-      print('İstenen indeks mevcut değil: $index');
+      print('The requested index does not exist: $index');
       index = 0;
     }
 
@@ -535,7 +535,7 @@ class _DetailPageState extends State<DetailPage> {
                                             children: [
                                               Text(
                                                 getForecastWeather(
-                                                    0)["forecastDate"],
+                                                    2)["forecastDate"],
                                                 style: const TextStyle(
                                                   color: Color(0xff6696f5),
                                                   fontWeight: FontWeight.w600,
@@ -546,7 +546,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        getForecastWeather(0)[
+                                                        getForecastWeather(2)[
                                                         "minTemperature"]
                                                             .toString(),
                                                         style: TextStyle(
@@ -576,7 +576,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        getForecastWeather(0)[
+                                                        getForecastWeather(2)[
                                                         "maxTemperature"]
                                                             .toString(),
                                                         style: TextStyle(
@@ -621,7 +621,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   Image.asset(
                                                     'assets/' +
                                                         getForecastWeather(
-                                                            0)["weatherIcon"],
+                                                            2)["weatherIcon"],
                                                     width: 30,
                                                   ),
                                                   const SizedBox(
@@ -643,7 +643,7 @@ class _DetailPageState extends State<DetailPage> {
                                                 children: [
                                                   Text(
                                                     getForecastWeather(
-                                                        0)["changeOfRain"].toString() + "%",
+                                                        2)["changeOfRain"].toString() + "%",
                                                     style: const TextStyle(
                                                       color: Colors.grey,
                                                       fontSize: 16,
