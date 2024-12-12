@@ -20,7 +20,7 @@ class _DetailPageState extends State<DetailPage> {
 
     print('Toplam hava durumu verisi: ${weatherData.length}');
 
-    if (weatherData == null || weatherData.isEmpty) {
+    if (weatherData.isEmpty) {
       print('Hava durumu verisi boş');
       return {
         'minWindSpeed': 0,
