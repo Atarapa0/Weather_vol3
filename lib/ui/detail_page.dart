@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:weathervol3/components/weather_item.dart';
 import 'package:weathervol3/constants.dart';
 
 class DetailPage extends StatefulWidget {
@@ -16,10 +17,31 @@ class _DetailPageState extends State<DetailPage> {
 
   Map<String, dynamic> getForecastWeather(int index) {
     var weatherData = widget.dailyForecastWeather;
+
+    print('Toplam hava durumu verisi: ${weatherData.length}');
+
+    if (weatherData == null || weatherData.isEmpty) {
+      print('Hava durumu verisi boş');
+      return {
+        'minWindSpeed': 0,
+        'avgHumidity': 0,
+        'changeOfRain': 0,
+        'forecastDate': 'No Date',
+        'weatherName': 'No Data',
+        'weatherIcon': 'default.png',
+        'minTemperature': 0,
+        'maxTemperature': 0,
+      };
+    }
+
+    if (index < 0 || index >= weatherData.length) {
+      print('İstenen indeks mevcut değil: $index');
+      index = 0;
+    }
+
     int maxWindSpeed = weatherData[index]["day"]["maxwind_kph"].toInt();
     int avgHumidity = weatherData[index]["day"]["avghumidity"].toInt();
-    int changeOfRain =
-        weatherData[index]["day"]["daily_chance_of_rain"].toInt();
+    int changeOfRain = weatherData[index]["day"]["daily_chance_of_rain"].toInt();
 
     var parsedDate = DateTime.parse(weatherData[index]["date"]);
     var forecastDate = DateFormat('EEEE d MMMM').format(parsedDate);
@@ -58,7 +80,6 @@ class _DetailPageState extends State<DetailPage> {
             padding: const EdgeInsets.only(right: 8),
             child: IconButton(
               onPressed: () {
-                print("Settings Tapped!");
               },
               icon: const Icon(Icons.settings),
             ),
@@ -145,22 +166,26 @@ class _DetailPageState extends State<DetailPage> {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                /*children: [
+                                children: [
+                                  if (getForecastWeather(0)["minWindSpeed"] != null)
                                     WeatherItem(
-                                      value: getForecastWeather(0)["maxWindSpeed"],
+                                      value: getForecastWeather(0)["minWindSpeed"],
                                       unit: 'km/h',
                                       ImageUrl: "assets/windy.png",
                                     ),
+                                  if (getForecastWeather(0)["avgHumidity"] != null)
                                     WeatherItem(
                                       value: getForecastWeather(0)["avgHumidity"],
                                       unit: '%',
                                       ImageUrl: "assets/humidity.png",
-                                    ),WeatherItem(
+                                    ),
+                                  if (getForecastWeather(0)["changeOfRain"] != null)
+                                    WeatherItem(
                                       value: getForecastWeather(0)["changeOfRain"],
                                       unit: '%',
                                       ImageUrl: "assets/light rain.png",
                                     ),
-                                  ],*/ // hata aldığım yer
+                                ],
                               ),
                             ),
                           ),
@@ -219,7 +244,7 @@ class _DetailPageState extends State<DetailPage> {
                                               Text(
                                                 getForecastWeather(
                                                     0)["forecastDate"],
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Color(0xff6696f5),
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -365,7 +390,7 @@ class _DetailPageState extends State<DetailPage> {
                                               Text(
                                                 getForecastWeather(
                                                     1)["forecastDate"],
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Color(0xff6696f5),
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -510,8 +535,8 @@ class _DetailPageState extends State<DetailPage> {
                                             children: [
                                               Text(
                                                 getForecastWeather(
-                                                    2)["forecastDate"],
-                                                style: TextStyle(
+                                                    0)["forecastDate"],
+                                                style: const TextStyle(
                                                   color: Color(0xff6696f5),
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -521,7 +546,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        getForecastWeather(2)[
+                                                        getForecastWeather(0)[
                                                         "minTemperature"]
                                                             .toString(),
                                                         style: TextStyle(
@@ -551,7 +576,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        getForecastWeather(2)[
+                                                        getForecastWeather(0)[
                                                         "maxTemperature"]
                                                             .toString(),
                                                         style: TextStyle(
@@ -596,7 +621,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   Image.asset(
                                                     'assets/' +
                                                         getForecastWeather(
-                                                            2)["weatherIcon"],
+                                                            0)["weatherIcon"],
                                                     width: 30,
                                                   ),
                                                   const SizedBox(
@@ -604,7 +629,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   ),
                                                   Text(
                                                     getForecastWeather(
-                                                        2)["weatherName"],
+                                                        0)["weatherName"],
                                                     style: const TextStyle(
                                                       color: Colors.grey,
                                                       fontSize: 16,
@@ -618,7 +643,7 @@ class _DetailPageState extends State<DetailPage> {
                                                 children: [
                                                   Text(
                                                     getForecastWeather(
-                                                        2)["changeOfRain"].toString() + "%",
+                                                        0)["changeOfRain"].toString() + "%",
                                                     style: const TextStyle(
                                                       color: Colors.grey,
                                                       fontSize: 16,
