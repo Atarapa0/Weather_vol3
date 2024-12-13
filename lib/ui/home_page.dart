@@ -306,7 +306,7 @@ class _HomePageState extends State<HomePage> {
                         WeatherItem(
                           value: cloud.toInt(),
                           unit: "%",
-                          ImageUrl: "assets/cloudy-night.png",
+                          ImageUrl: "assets/rain.png",
                         ),
                       ],
                     ),

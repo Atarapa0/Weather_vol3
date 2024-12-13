@@ -183,7 +183,7 @@ class _DetailPageState extends State<DetailPage> {
                                     WeatherItem(
                                       value: getForecastWeather(0)["changeOfRain"],
                                       unit: '%',
-                                      ImageUrl: "assets/light rain.png",
+                                      ImageUrl: "assets/rain.png",
                                     ),
                                 ],
                               ),
@@ -361,7 +361,7 @@ class _DetailPageState extends State<DetailPage> {
                                                     width: 5,
                                                   ),
                                                   Image.asset(
-                                                    'assets/light rain.png',
+                                                    'assets/rain.png',
                                                     width: 30,
                                                   ),
                                                 ],
@@ -507,7 +507,7 @@ class _DetailPageState extends State<DetailPage> {
                                                     width: 5,
                                                   ),
                                                   Image.asset(
-                                                    'assets/light rain.png',
+                                                    'assets/rain.png',
                                                     width: 30,
                                                   ),
                                                 ],
@@ -653,7 +653,7 @@ class _DetailPageState extends State<DetailPage> {
                                                     width: 5,
                                                   ),
                                                   Image.asset(
-                                                    'assets/light rain.png',
+                                                    'assets/rain.png',
                                                     width: 30,
                                                   ),
                                                 ],
