@@ -17,6 +17,8 @@ I'm excited to share my **third weather application** developed with Flutter! Th
 This project has been a great step forward in enhancing my Flutter development skills and pushing the boundaries of my creativity. My next goal is to add **data visualization tools** and **more advanced interactive features**. 🌍  
 
 **I’d love to hear your thoughts and suggestions!** Your feedback inspires me to improve and innovate. 😊  
+
+
 <img width="391" alt="Ekran Resmi 2024-12-13 21 41 45" src="https://github.com/user-attachments/assets/5f6a22b1-42a9-42da-a083-445fabcacbff" />
 <img width="379" alt="Ekran Resmi 2024-12-13 21 41 58" src="https://github.com/user-attachments/assets/9b01ed9e-72f6-4834-a785-97da4d7fc7b2" />
 
